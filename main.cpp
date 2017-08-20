@@ -2,13 +2,23 @@
 #include <ctime>
 #include <cstdlib>
 
-void drawField();
+int DIM=5;
+
+void makeField(char* );
+void drawField(char* );
+void choose(char *);
 
 int main(int argc, char** argv) {
-	
-drawField();
-	
-	
+
+char* point;
+char fruitField[DIM][DIM];
+
+point=&fruitField[0][0];
+makeField(point);
+point=&fruitField[0][0];
+choose(point);
+point=&fruitField[0][0];
+drawField(point);
 	
 	
 	
@@ -16,27 +26,52 @@ drawField();
 }
 
 
-void drawField()
+void makeField(char* fruitField)
 {
-//	srand(time(0));
-	char field[10][10];
-	for(int x=0;x<10;x++)
+	srand(time(0));
+	
+	for(int x=0;x<DIM;x++)
 	{
-		for(int y=0;y<10;y++)
+		for(int y=0;y<DIM;y++)
 		{
 			int var= rand()%3;
 			switch(var)
 			{
-				case 0: field[x][y]='a';
+				case 0: *fruitField='a';
 				break;
-				case 1: field[x][y]='b';
+				case 1: *fruitField='b';
 				break;
-				case 2: field[x][y]='c';
+				case 2: *fruitField='c';
 				break;
 				
 			}
-			std::cout<<field[x][y]<<' ';
+			fruitField++;
+		}
+		fruitField++;
+	}
+
+}
+
+void choose(char* fruit)
+{
+		switch (*fruit)
+	{
+		case 'a': *fruit='A'; break;
+		case 'b': *fruit='B'; break;
+		case 'c': *fruit='C'; break;
+	} 
+}
+
+void drawField(char* field)
+{
+	for(int x=0;x<DIM;x++)
+	{
+		for(int y=0;y<DIM;y++)
+		{
+			std::cout<<*field<<' ';
+			field++;
 		}
 		std::cout<<std::endl;
+		field++;
 	}
 }
