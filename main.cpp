@@ -1,12 +1,18 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include <conio.h>
 
 int DIM=5;
+char* choosenFruit;
+int chek=0;
 
 void makeField(char* );
 void drawField(char* );
-void choose(char *);
+void chooseFirst(char *);
+char* move(char *);
+void invert_a_into_A(char *);
+void invert_A_into_a(char *);
 
 int main(int argc, char** argv) {
 
@@ -14,11 +20,21 @@ char* point;
 char fruitField[DIM][DIM];
 
 point=&fruitField[0][0];
+choosenFruit=&fruitField[0][0];
 makeField(point);
 point=&fruitField[0][0];
-choose(point);
+chooseFirst(point);
+
 point=&fruitField[0][0];
 drawField(point);
+do
+{
+move(choosenFruit);
+
+point=&fruitField[0][0];
+drawField(point);
+std::cout<<std::endl<<chek;
+}while(true);
 	
 	
 	
@@ -52,14 +68,87 @@ void makeField(char* fruitField)
 
 }
 
-void choose(char* fruit)
+void chooseFirst(char* fruit)
 {
-		switch (*fruit)
+	invert_a_into_A(fruit);
+}
+
+char* move(char* fruit)
+{
+	
+	int key=getch();
+	switch(key)
 	{
-		case 'a': *fruit='A'; break;
-		case 'b': *fruit='B'; break;
-		case 'c': *fruit='C'; break;
-	} 
+		case 72:
+		{
+			if(!(chek<6))
+			{
+				invert_A_into_a(fruit);
+				fruit-=6;
+				chek-=6;
+				choosenFruit=fruit;
+				invert_a_into_A(fruit);
+			}
+			
+		}break;
+        case 80:
+		{
+			if(!(chek>22))
+			{
+				invert_A_into_a(fruit);
+				fruit+=6; 
+				chek+=6;
+				choosenFruit=fruit;
+				invert_a_into_A(fruit);
+			}
+			
+		}break;
+        case 75:
+		{
+			if(!(chek==0||chek==6||chek==12||chek==18||chek==24))
+			{
+				invert_A_into_a(fruit);
+				fruit-=1;
+				chek-=1;
+				choosenFruit=fruit;
+				invert_a_into_A(fruit);
+			}
+		}break;
+        case 77:
+		{
+			if(!(chek>27||chek==4||chek==10||chek==16||chek==22||chek==28))
+			{
+				invert_A_into_a(fruit);
+				fruit+=1;
+				chek+=1;
+				choosenFruit=fruit;
+				invert_a_into_A(fruit);
+			}
+		}break;
+	}
+	fflush(stdin);
+	system("cls");
+	return fruit;
+}
+
+void invert_a_into_A(char *item)
+{
+	switch (*item)
+			{
+				case 'a': *item='A'; break;
+				case 'b': *item='B'; break;
+				case 'c': *item='C'; break;
+			}
+}
+
+void invert_A_into_a(char *item)
+{
+	switch (*item)
+			{
+				case 'A': *item='a'; break;
+				case 'B': *item='b'; break;
+				case 'C': *item='c'; break;
+			}
 }
 
 void drawField(char* field)
