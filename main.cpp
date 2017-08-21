@@ -6,6 +6,8 @@
 int DIM=5;
 char* choosenFruit;
 int chek=0;
+bool win=false;
+bool choose=false;
 
 void makeField(char* );
 void drawField(char* );
@@ -19,22 +21,24 @@ int main(int argc, char** argv) {
 char* point;
 char fruitField[DIM][DIM];
 
+
+
 point=&fruitField[0][0];
 choosenFruit=&fruitField[0][0];
 makeField(point);
 point=&fruitField[0][0];
 chooseFirst(point);
-
+std::cout<<"To chose fruit please tap 'F'(Eng)"<<std::endl<<std::endl<<std::endl;
 point=&fruitField[0][0];
 drawField(point);
 do
 {
+
 move(choosenFruit);
 
 point=&fruitField[0][0];
 drawField(point);
-std::cout<<std::endl<<chek;
-}while(true);
+}while(!win);
 	
 	
 	
@@ -125,9 +129,25 @@ char* move(char* fruit)
 				invert_a_into_A(fruit);
 			}
 		}break;
+		case (int)'f':
+			{
+				if(!choose)
+				{
+					choose=true;
+					
+				}
+				else
+				{
+					choose=false;
+
+				}
+				
+			}
 	}
 	fflush(stdin);
+	
 	system("cls");
+	std::cout<<"To chose fruit please tap 'F'(Eng)"<<std::endl<<std::endl<<std::endl;
 	return fruit;
 }
 
@@ -153,6 +173,11 @@ void invert_A_into_a(char *item)
 
 void drawField(char* field)
 {
+if(choose==true)
+std::cout<<"Fruit chosen"<<std::endl<<std::endl;
+else
+std::cout<<"Fruit not chosen"<<std::endl<<std::endl;
+
 	for(int x=0;x<DIM;x++)
 	{
 		for(int y=0;y<DIM;y++)
